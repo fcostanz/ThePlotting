@@ -1,0 +1,12 @@
+#config file
+#format is $SAMPLE_PATH $SAMPLE_TYPE
+#sample_type = {bkg, dat, sig}
+/nfs/dust/cms/user/sahin/ThePlotting/data/T2tb-mStop200mLSP25.root sig
+/nfs/dust/cms/user/sahin/ThePlotting/data/T2tb-mStop325mLSP100.root sig
+/nfs/dust/cms/user/sahin/ThePlotting/data/Data.root dat
+/nfs/dust/cms/user/sahin/ThePlotting/data/QCD.root bkg
+/nfs/dust/cms/user/sahin/ThePlotting/data/DiLep.root bkg
+/nfs/dust/cms/user/sahin/ThePlotting/data/Rare.root bkg
+/nfs/dust/cms/user/sahin/ThePlotting/data/WJets.root bkg
+/nfs/dust/cms/user/sahin/ThePlotting/data/OneLep.root bkg
+/nfs/dust/cms/user/sahin/ThePlotting/data/DrellYan.root bkg
