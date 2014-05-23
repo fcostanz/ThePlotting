@@ -19,9 +19,9 @@ TestExample = test/example.exe
 
 # with additional libs and includes
 # e.g. MORELIBS = -L/path -lblub
-MORELIBS = -L/usr/lib64 -lz
+MORELIBS = -L/usr/lib64 -lz -lCore
 # e.g. -I/path
-MOREINCS = -I/usr/include
+MOREINCS = -I/usr/include -I${ROOTSYS}/include 
 
 OBJS = $(notdir $(SOURCES))
 OBJS := $(OBJS:.C=.o)
