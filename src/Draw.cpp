@@ -17,6 +17,7 @@ ozgur[no_spam].sahin[spam_not]@cern.ch
 #include <TAxis.h>
 #include <TFile.h>
 #include <TCanvas.h>
+#include <cstdlib>
 #include "Pad.h"
 #include "Ratio.h"
 #include "Control.h"
@@ -32,7 +33,7 @@ using namespace plotting;
 void plotting::Draw::arrange_hists(const TString& config_path)
 {
   TH1::SetDefaultSumw2(true);
-  gErrorIgnoreLevel = kWarning;
+  gErrorIgnoreLevel = kBreak;
   properties property(config_path);
   std::vector<TString*>::iterator path_it;
   //Don't worry we are not moving the objects, just put their addresses together.

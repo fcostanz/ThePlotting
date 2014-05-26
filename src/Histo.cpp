@@ -9,7 +9,7 @@ Author:OS
 #include <TKey.h>
 #include <TFile.h>
 #include <iostream>
-
+#include <cstdlib>
 using namespace std;
 //simple method that sets the integral for the given value to Hist container 
 void plotting::Histo::Set_integral(Hist* hist_it,int min, int max)  {

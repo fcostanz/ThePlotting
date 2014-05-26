@@ -5,6 +5,7 @@
 #include <TH1D.h>
 #include "THStack.h"
 #include <TList.h>
+#include <cstdlib>
 #include "TObject.h"
 #include "TCollection.h"
 #include "TLatex.h"

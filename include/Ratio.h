@@ -25,7 +25,7 @@ namespace plotting{
   template<class dat_type, class bkg_type, class sig_type> TPad* plotting::Ratio<dat_type,bkg_type,sig_type>::DrawPlot(dat_type* data,bkg_type* background, sig_type* signal)
     {
 
-      TPad* pad1= AllocPad(data->GetName(),background->GetName());
+      TPad* pad1= this->AllocPad(data->GetName(),background->GetName());
       pad1->Draw();
       
 

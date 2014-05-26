@@ -10,6 +10,7 @@ Author: OS
 #include <vector>
 #include <iostream>
 #include <THStack.h>
+#include <cstdlib>
 /*Purpose of this class is to arrange histogram containers for the plotting tool
   The Histo base class is inherited to variety of different classes among the tool, 
   thus, a basic understanding of this class is necessary to do modifications on the
