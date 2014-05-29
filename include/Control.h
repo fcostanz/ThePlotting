@@ -59,8 +59,11 @@ namespace plotting{
     pad2->cd();
 
     if(data) data->Draw("SAME,EP");
-    if(signal!=0)signal->Draw("SAME,HIST,NOSTACK");
-    signal->SetMinimum(1);
+    if(signal!=0)
+      {
+	signal->Draw("SAME,HIST,NOSTACK");
+	signal->SetMinimum(1);
+      }
     pad2->Update();
     
     //Set the visible range on Y axis 

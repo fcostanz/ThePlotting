@@ -147,13 +147,17 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
   Control<TH1D,THStack,THStack> ControlPlot( kBig, kTop,(TString) "control");
   //iterates over the sample objects
   std::vector<Hists_container>::iterator bkg_dir_it;
-  std::vector<Hists_container>::iterator sig_dir_it =  sig_hists_stack->begin();;
+  std::vector<Hists_container>::iterator sig_dir_it;
+  if(sig_hists->size()!=0) sig_dir_it =  sig_hists_stack->begin();;
   std::vector<Hists_container>::iterator data_dir_it = dat_hists->at(0)->begin();
+  //Hist Containers
+  std::vector<Hist>::iterator sig_hist_it;
+  std::vector<Hist>::iterator bkg_hist_it;
   //same file structure is assumed here
   for(bkg_dir_it = bkg_hists_stack->begin(); bkg_dir_it != bkg_hists_stack->end(); bkg_dir_it++)
     {
       std::vector<Hist>::iterator bkg_hist_it;
-      std::vector<Hist>::iterator sig_hist_it  = sig_dir_it->begin();
+      if(sig_hists->size()!=0)  sig_hist_it  = sig_dir_it->begin();
       std::vector<Hist>::iterator data_hist_it = data_dir_it->begin();
       
       TString canvas_name;
@@ -164,19 +168,18 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
 	  c1 = new TCanvas(canvas_name,canvas_name,600, 700); 
 	  rat = RatioPlot.DrawPlot((TH1D*)data_hist_it->h, (TH1D*)bkg_hist_it->h);
 	  c1->cd();
-
-	  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack, (THStack*)sig_hist_it->stack);
-
+	  if(sig_hists->size()!=0)  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack, (THStack*)sig_hist_it->stack);
+	  else  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack);
 	  c1->Update();
 	  c1->Write();
 	  
 	  if(createfiles)  PlotDir->SaveCanvas(extension,data_hist_it->dir,c1);
 	  data_hist_it++; 
-	  sig_hist_it++; 
+	  if(sig_hists->size()!=0)  sig_hist_it++; 
 	  c1->Delete();
 	}
       data_dir_it++;
-      sig_dir_it++;
+      if(sig_hists->size()!=0)  sig_dir_it++;
     }
   ratiocontrol->Close();
 }
