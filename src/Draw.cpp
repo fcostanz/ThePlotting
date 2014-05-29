@@ -137,7 +137,8 @@ void plotting::Draw::mc_sequence(std::vector<Dir_container>* mc_hists, std::vect
 //Control plots are produced here.
 void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& extension)
 {
-
+  TCanvas *c1;
+  TPad* cont,*rat;
   Dir* PlotDir= new Dir("RatioControlPlots");
   //  PlotDir->print_mDir();//prints the main dir
   TFile * ratiocontrol = new TFile ("RatioControlPlots.root", "RECREATE");
@@ -158,12 +159,13 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
       TString canvas_name;
       for(bkg_hist_it =(bkg_dir_it)->begin(); bkg_hist_it != (bkg_dir_it)->end(); bkg_hist_it++)
 	{
-	  canvas_name = (TString)bkg_hist_it->h->GetName()+(TString)"_canvas";
-	  TCanvas *c1 = new TCanvas(canvas_name,canvas_name,600, 700); 
-	  TPad * rat = RatioPlot.DrawPlot((TH1D*)data_hist_it->h, (TH1D*)bkg_hist_it->h);
+	  canvas_name = (TString)bkg_hist_it->h->GetName();
+	  canvas_name.Remove(0,canvas_name.First('_')+1);//strip the sample name from canvas
+	  c1 = new TCanvas(canvas_name,canvas_name,600, 700); 
+	  rat = RatioPlot.DrawPlot((TH1D*)data_hist_it->h, (TH1D*)bkg_hist_it->h);
 	  c1->cd();
 
-	  TPad * cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack, (THStack*)sig_hist_it->stack);
+	  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack, (THStack*)sig_hist_it->stack);
 
 	  c1->Update();
 	  c1->Write();
@@ -171,6 +173,7 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
 	  if(createfiles)  PlotDir->SaveCanvas(extension,data_hist_it->dir,c1);
 	  data_hist_it++; 
 	  sig_hist_it++; 
+	  c1->Delete();
 	}
       data_dir_it++;
       sig_dir_it++;
