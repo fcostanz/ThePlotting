@@ -1,4 +1,4 @@
-#config file
+#sample list
 #format is $SAMPLE_PATH $SAMPLE_TYPE
 #sample_type = {bkg, dat, sig}
 ./data/T2tb-mStop200mLSP25.root sig

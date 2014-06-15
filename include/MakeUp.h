@@ -41,6 +41,7 @@ namespace plotting{
       t->cd();
       cms->Draw();
       info->Draw();
+      gPad->RedrawAxis();
     }
     
     MakeUp(){

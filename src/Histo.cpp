@@ -50,11 +50,13 @@ void plotting::Histo::Loop_histos(TDirectory * dir,Histo_t * type, vector<TStrin
 	  dName = (TString)key->GetName();
 	  mName = dName;
 	  (&dirName)->push_back((TString)key->GetName());
+	  cout << dName << endl;
 	}
       else
 	{
 	  (&dirName)->push_back((TString)key->GetName());
 	  dName = dName+(TString)"_"+(TString)key->GetName();  
+
 	}
       dir_depth++;
       dir->cd(key->GetName());
@@ -80,7 +82,6 @@ void plotting::Histo::Loop_histos(TDirectory * dir,Histo_t * type, vector<TStrin
 	  hist_container.h->SetName(hName);
 	  if(*type==bkg) hist_container.h->SetFillColor(col);
 	  if(*type==sig) hist_container.h->SetLineWidth(3);
-	  //	  if(*type==sig) hist_container.h->SetMarkerSize(0);
 	  if(*type==sig) hist_container.h->SetOption("HIST");
 	  hist_container.h->SetLineColor(col); 
 	}

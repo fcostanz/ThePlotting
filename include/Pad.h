@@ -16,14 +16,14 @@ namespace plotting{
   enum SizePad_t {kSmall, kMedium, kBig};
   enum PositionPad_t {kTop,kBottom,kMiddle};
   
-  template<class dat_type, class bkg_type, class sig_type> class Pad{
+  template<class bkg_type, class dat_type, class sig_type> class Pad{
   public:
     Pad(SizePad_t s, PositionPad_t p, TString t):size(s),pos(p),type(t){
     };
     Pad(){};
     ~Pad(){};
     
-    virtual TPad* DrawPlot(dat_type*,bkg_type*,sig_type*)=0;//we do not aim for very high perf here so it is ok to use virtual funcs;
+    virtual TPad* DrawPlot(bkg_type*,dat_type*,sig_type*)=0;//we do not aim for very high perf here so it is ok to use virtual funcs;
     int Print() const;
 
   protected:
@@ -33,7 +33,7 @@ namespace plotting{
     TString type;
   };
   
-  template<class dat_type, class bkg_type, class sig_type> TPad* plotting::Pad<dat_type,bkg_type,sig_type>::AllocPad(TString name1, TString name2)
+  template<class bkg_type, class dat_type, class sig_type> TPad* plotting::Pad<bkg_type,dat_type,sig_type>::AllocPad(TString name1, TString name2)
   {
     TPad *pad =new TPad(name1+name2,name1+name2,0,0,1,1);
     //Probably there is a better way of doing this but for the moment I am happy with it

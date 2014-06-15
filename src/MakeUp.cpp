@@ -17,11 +17,11 @@ TString plotting::MakeUp::AddSampleName(const TString &SampName)
   TString tex;
   if(SampName.Contains("dilep",TString::kIgnoreCase))
     {
-      tex = " #font[42]{t#bar{t}#rightarrow}#font[132]{#it{l#bar{l}}}";
+      tex = " #font[42]{t#bar{t}#rightarrow}#font[132]{#it{\el#bar{\el}}}";
     }
   else if(SampName.Contains("singlelep",TString::kIgnoreCase) || SampName.Contains("onelep",TString::kIgnoreCase))
     {
-      tex =" #font[42]{1#font[12]{l} top}";
+      tex =" #font[42]{1#font[12]{\el} top}";
     }
   else if(SampName.Contains("wjets",TString::kIgnoreCase))
     {
@@ -37,7 +37,7 @@ TString plotting::MakeUp::AddSampleName(const TString &SampName)
     }
   else if(SampName.Contains("drell",TString::kIgnoreCase))
     {
-      tex =" #font[42]{Z/#gamma*#rightarrow}#font[132]{#it{l#bar{l}}}";
+      tex =" #font[42]{Z/#gamma*#rightarrow}#font[132]{#it{\el#bar{\el}}}";
     }
   else if(SampName.Contains("T2tb-mStop200mLSP25",TString::kIgnoreCase))
     {

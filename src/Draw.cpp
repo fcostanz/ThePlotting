@@ -143,22 +143,24 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
   //  PlotDir->print_mDir();//prints the main dir
   TFile * ratiocontrol = new TFile ("RatioControlPlots.root", "RECREATE");
   // HERE YOU CAN CHANGE THE ORDER OF THE PADS
-  Ratio<TH1D,TH1D,TH1D> RatioPlot( kSmall, kBottom,(TString) "ratio");
-  Control<TH1D,THStack,THStack> ControlPlot( kBig, kTop,(TString) "control");
+  Ratio<TH1D,TH1D,TH1D> RatioPlot( kSmall, kTop,(TString) "ratio");
+  Control<THStack,TH1D,THStack> ControlPlot( kBig, kBottom,(TString) "control");
   //iterates over the sample objects
   std::vector<Hists_container>::iterator bkg_dir_it;
   std::vector<Hists_container>::iterator sig_dir_it;
   if(sig_hists->size()!=0) sig_dir_it =  sig_hists_stack->begin();;
-  std::vector<Hists_container>::iterator data_dir_it = dat_hists->at(0)->begin();
+  std::vector<Hists_container>::iterator data_dir_it;  
+  if(dat_hists->size()!=0)  data_dir_it = dat_hists->at(0)->begin();
   //Hist Containers
   std::vector<Hist>::iterator sig_hist_it;
   std::vector<Hist>::iterator bkg_hist_it;
+  std::vector<Hist>::iterator data_hist_it;
   //same file structure is assumed here
   for(bkg_dir_it = bkg_hists_stack->begin(); bkg_dir_it != bkg_hists_stack->end(); bkg_dir_it++)
     {
-      std::vector<Hist>::iterator bkg_hist_it;
+
       if(sig_hists->size()!=0)  sig_hist_it  = sig_dir_it->begin();
-      std::vector<Hist>::iterator data_hist_it = data_dir_it->begin();
+      if(dat_hists->size()!=0)  data_hist_it = data_dir_it->begin();
       
       TString canvas_name;
       for(bkg_hist_it =(bkg_dir_it)->begin(); bkg_hist_it != (bkg_dir_it)->end(); bkg_hist_it++)
@@ -166,19 +168,20 @@ void plotting::Draw::ControlRatioPlot(const bool createfiles,const TString& exte
 	  canvas_name = (TString)bkg_hist_it->h->GetName();
 	  canvas_name.Remove(0,canvas_name.First('_')+1);//strip the sample name from canvas
 	  c1 = new TCanvas(canvas_name,canvas_name,600, 700); 
-	  rat = RatioPlot.DrawPlot((TH1D*)data_hist_it->h, (TH1D*)bkg_hist_it->h);
+	  if(dat_hists->size()!=0) rat = RatioPlot.DrawPlot((TH1D*)bkg_hist_it->h, (TH1D*)data_hist_it->h);
 	  c1->cd();
-	  if(sig_hists->size()!=0)  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack, (THStack*)sig_hist_it->stack);
-	  else  cont =ControlPlot.DrawPlot((TH1D*)data_hist_it->h, (THStack*)bkg_hist_it->stack);
+	  if(sig_hists->size()!=0 && dat_hists->size()!=0)  cont =ControlPlot.DrawPlot( (THStack*)bkg_hist_it->stack,(TH1D*)data_hist_it->h, (THStack*)sig_hist_it->stack);
+	  else if(sig_hists->size()!=0)  cont =ControlPlot.DrawPlot((THStack*)bkg_hist_it->stack,0, (THStack*)sig_hist_it->stack);
+	  else if(dat_hists->size()!=0)  cont =ControlPlot.DrawPlot((THStack*)bkg_hist_it->stack,(TH1D*)data_hist_it->h,0);
+	  else cont =ControlPlot.DrawPlot((THStack*)bkg_hist_it->stack);
 	  c1->Update();
 	  c1->Write();
-	  
-	  if(createfiles)  PlotDir->SaveCanvas(extension,data_hist_it->dir,c1);
-	  data_hist_it++; 
+	  if(createfiles && dat_hists->size()!=0)  PlotDir->SaveCanvas(extension,data_hist_it->dir,c1);
+	  if(dat_hists->size()!=0)  data_hist_it++; 
 	  if(sig_hists->size()!=0)  sig_hist_it++; 
 	  c1->Delete();
 	}
-      data_dir_it++;
+      if(dat_hists->size()!=0) data_dir_it++;
       if(sig_hists->size()!=0)  sig_dir_it++;
     }
   ratiocontrol->Close();

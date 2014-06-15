@@ -14,7 +14,7 @@ int main(int argc, const char* argv[]){
   time_t start = time(0);
 
 
-  Draw draw("./config.txt");
+  Draw draw("config.txt");
   draw.ControlRatioPlot(true);
 
   time_t end = time(0);

@@ -14,15 +14,15 @@ Author: OS
 #include "MakeUp.h"
 namespace plotting{
    
-  template<class dat_type, class bkg_type, class sig_type>  class Ratio : Pad<dat_type,bkg_type,sig_type>{
+  template<class bkg_type, class dat_type, class sig_type>  class Ratio : Pad<bkg_type,dat_type,sig_type>{
   public:
-    Ratio(SizePad_t s, PositionPad_t p, TString t):Pad<dat_type,bkg_type,sig_type>(s,p,t){};
+    Ratio(SizePad_t s, PositionPad_t p, TString t):Pad<bkg_type,dat_type,sig_type>(s,p,t){};
     ~Ratio(){};
     
-    TPad* DrawPlot(dat_type*,bkg_type*,sig_type* signal = 0);
+    TPad* DrawPlot(bkg_type*,dat_type*,sig_type* signal = 0);
     
   };
-  template<class dat_type, class bkg_type, class sig_type> TPad* plotting::Ratio<dat_type,bkg_type,sig_type>::DrawPlot(dat_type* data,bkg_type* background, sig_type* signal)
+  template<class bkg_type, class dat_type, class sig_type> TPad* plotting::Ratio<bkg_type,dat_type,sig_type>::DrawPlot(bkg_type* background,dat_type* data, sig_type* signal)
     {
 
       TPad* pad1= this->AllocPad(data->GetName(),background->GetName());
