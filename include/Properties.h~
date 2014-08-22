@@ -27,12 +27,12 @@ namespace plotting{
     properties(TString config_path) {
          readConfig(config_path);};
     std::vector<TString*> paths;//sample paths
-    typedef struct config 
+    struct configProp 
     {
       TString colorComp;
       bool sort;
       bool add;
-    } configProp;
+    }
   private:
     void readConfig(TString & config_path , int trial = 0);
   };  

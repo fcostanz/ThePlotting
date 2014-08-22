@@ -29,8 +29,7 @@ void plotting::properties::readSample(TString & sample_path) {
       if('#' != line[0]) //lines starting with "#" reserved for the comments
 	{
 	  list = ((TString)line).Tokenize(" ");
-	  if(list->GetEntriesFast() == 0) continue;
-	  if(list->GetEntriesFast() != 2) {cout << "please check the sample file structure: <sample path> <sample type>" << endl; exit(0);}
+	  if(list->GetEntriesFast()!= 2) {cout << "please check the sample file structure: <sample path> <sample type>" << endl; exit(0);}
 	  TIter next(list);//unfortunately TString can not be stored (or can not be converted to TObject) as TObject so TObjString it is...
 	  paths.push_back(&((TObjString*)next())->String());//The first word is the path and the second one is type of the sample- these to words are seperated with empty space
 	  cout << "path:"<<*paths.back() << " ";
@@ -78,26 +77,19 @@ std::ifstream plotting::properties::openFile(TString & _path, TString & typeText
     {
       if('#' != line[0]) //lines starting with "#" reserved for the comments
 	{
-	  if('*' == line[0])
-	    {
-	      ((TString)line).Contains("bkg",TString::kIgnoreCase);
-	    }
-	  else
-	    {
-	      list = ((TString)line).Tokenize("=");
-	      if(list->GetEntriesFast() == 0) continue;
-	      if(list->GetEntriesFast() != 2) {cout << "please check the config file structure: <sample path> <sample type>" << endl; exit(0);}
-	      TIter next(list);//unfortunately TString can not be stored (or can not be converted to TObject) as TObject so TObjString it is...
-	      paths.push_back(&((TObjString*)next())->String());//The first word is the path and the second one is type of the sample- these to words are seperated with empty space
-	      TString type = ((TObjString*)next())->String();
-	      cout << "type:"<<type << endl;
-	      if(type == "bkg")
-		sample_prop[*paths.back()]=bkg;
-	      else if(type == "sig")
-		sample_prop[*paths.back()]=sig;
-	      else if(type == "dat")
-		sample_prop[*paths.back()]=dat;
-	    }
+	  list = ((TString)line).Tokenize(" ");
+	  if(list->GetEntriesFast()!= 2) {cout << "please check the config file structure: <sample path> <sample type>" << endl; exit(0);}
+	  TIter next(list);//unfortunately TString can not be stored (or can not be converted to TObject) as TObject so TObjString it is...
+	  paths.push_back(&((TObjString*)next())->String());//The first word is the path and the second one is type of the sample- these to words are seperated with empty space
+	  cout << "path:"<<*paths.back() << " ";
+	  TString type = ((TObjString*)next())->String();
+	  cout << "type:"<<type << endl;
+	  if(type == "bkg")
+	    sample_prop[*paths.back()]=bkg;
+	  else if(type == "sig"){
+	    sample_prop[*paths.back()]=sig;}
+	  else if(type == "dat")
+	    sample_prop[*paths.back()]=dat;
 	}
     }
   config_file.close();
